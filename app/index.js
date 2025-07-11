@@ -1,5 +1,5 @@
 const express = require('express');
-const { extractCookies } = require('./puppeteer');
+const { extractCookies } = require('./pupp');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
