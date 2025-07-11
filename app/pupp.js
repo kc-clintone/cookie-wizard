@@ -2,7 +2,10 @@ const puppeteer = require('puppeteer');
 const fs = require('fs');
 
 async function extractCookies() {
-  const browser = await puppeteer.launch({ headless: false }); // login manually
+  const browser = await puppeteer.launch({
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+
   const page = await browser.newPage();
   await page.goto('https://www.youtube.com');
 
