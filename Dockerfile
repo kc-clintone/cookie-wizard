@@ -10,15 +10,15 @@ RUN apt-get update && apt-get install -y \
   libgbm1 libgtk-3-0 && rm -rf /var/lib/apt/lists/*
 
 # Create app folder
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Copy files and install deps
 COPY package*.json ./
-RUN npm install
+RUN npm ci
 
 COPY . .
 
 # Expose port
 EXPOSE 3000
 
-CMD [ "node", "index.js" ]
+CMD [ "node", "app/index.js" ]
