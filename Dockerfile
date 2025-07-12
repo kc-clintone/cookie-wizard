@@ -1,6 +1,6 @@
 FROM node:18-slim
 
-# Install Chromium deps
+# Install Chromium dependencies
 RUN apt-get update && apt-get install -y \
   wget gnupg ca-certificates \
   fonts-liberation libappindicator3-1 libasound2 \
@@ -9,16 +9,21 @@ RUN apt-get update && apt-get install -y \
   libxcomposite1 libxdamage1 libxrandr2 xdg-utils \
   libgbm1 libgtk-3-0 && rm -rf /var/lib/apt/lists/*
 
-# Create app folder
-WORKDIR /app
+# Set working directory
+WORKDIR /usr/src/app
 
-# Copy files and install deps
-COPY package*.json ./
-RUN npm ci
+# Copy package files from 'add' directory
+COPY app/package*.json ./
 
-COPY . .
+# Install node dependencies
+RUN npm install
 
-# Expose port
+# Copy app code and chrome-profile from root
+COPY app/ ./app/
+COPY data/ ./data/
+
+# Expose the port the app runs on
 EXPOSE 3000
 
-CMD [ "node", "app/index.js" ]
+# Run the app
+CMD ["node", "app/index.js"]
